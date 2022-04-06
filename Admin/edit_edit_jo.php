@@ -94,10 +94,10 @@
                       </div>
                        </div>
 
-                       <p> Item no.</p>
+                     
                       <div class="col-sm-1">
                       <div class="form-group">
-                       <input type="text" style="text-align: center; font-size: 13px" class="form-control" name="no" <?php echo $btnStatus?> value="<?php echo  $no;?>">  
+                       <input type="hidden" style="text-align: center; font-size: 13px" class="form-control" name="no" <?php echo $btnStatus?> value="<?php echo  $no;?>">  
                       </div>
                        </div>
                        </div>
@@ -132,19 +132,26 @@
                 </select>
                       </div>
                       </div>
+          
 
-                            
-
-                    <div class="col-sm-5">
+                     <div class="col-sm-2">
                       <div class="form-group">
-                     <input type="text"  name="RegDays" <?php echo $btnStatus?> class="form-control"  value="<?php echo $get_days1?>" placeholder="Specific days" ></div>
-                      </div>      
+                     <input type="text"  name="RegDays" onchange="sync2()" class="form-control" <?php echo $btnStatus?> value="<?php echo $get_days1?>" id="start" style="text-align: center" placeholder="Specific day" ></div>
+                      </div>    -  
+
+
+                      <div class="col-sm-2">
+                      <div class="form-group">
+                     <input type="text"  name="RegDays2" class="form-control" <?php echo $btnStatus?> value="<?php echo $get_days_2?>" id="end" onchange="sync2()" style="text-align: center" ></div>
+                      </div>   
 
                       <div class="col-sm-3">
                       <div class="form-group">
-                     <input type="text" class="form-control" value="<?php echo $now=date('Y');?>" <?php echo $btnStatus?> ></div>
+                     <input type="text" class="form-control" <?php echo $btnStatus?> style="text-align: center" <?php echo $btnStatus?> value= <?php echo $now=date('Y');?> ></div>
                       </div>  
-                       </div> 
+                       </div>    
+
+                     
                 
                 <input type="hidden" name="Charges" class="form-control" value="<?php echo $get_proj_charges?>" placeholder="Total Amount" >     
 
@@ -257,11 +264,11 @@
  
                      <div class="col-sm-1">
                       <div class="form-group">
-                     <input type="text" name="Day1"  <?php echo $btnStatus?> id="day1" Placeholder="0" onchange="sync()" class="form-control" value="<?php echo $get_day1?>"></div>
+                     <input type="text" name="Day1" style="color:red; border-color: red"  <?php echo $btnStatus?> id="day1" Placeholder="0" onchange="sync()" class="form-control" value="<?php echo $get_day1?>"></div>
                       </div>           
 
 <?php }elseif($get_day1<>$get_day1 or $get_day1<$get_day1) {?>
-               <input type="text" name="Day1"  id="day1" <?php echo $btnStatus?> Placeholder="0" onchange="sync2()" class="form-control" value="<?php echo $get_day1?>"></div>
+               <input type="text" name="Day1" style="color:red; border-color: red"  id="day1" <?php echo $btnStatus?> Placeholder="0" onchange="sync2()" class="form-control" value="<?php echo $get_day1?>"></div>
                       </div>                              
      <?php } ?>
                     </div>
@@ -377,7 +384,7 @@
 
                         <div class="col-sm-1">
                       <div class="form-group">
-                     <input type="number" placeholder="0" <?php echo $btnStatus?> onchange="sync()" name="Day2" id="day2" Placeholder="0"  value="<?php echo $get_day2?>"class="form-control"id="day2"></div>
+                     <input type="number" placeholder="0" style="color:red; border-color: red" <?php echo $btnStatus?> onchange="sync()" name="Day2" id="day2" Placeholder="0"  value="<?php echo $get_day2?>"class="form-control"id="day2"></div>
                       </div>           
      
                     </div>
@@ -475,7 +482,7 @@
 
                     <div class="col-sm-1">
                       <div class="form-group">
-                     <input input type="number" placeholder="0" <?php echo $btnStatus?> onchange="sync()" name="Day3" Placeholder="0"  value="<?php echo $get_day3?>"class="form-control" id="day3"></div>
+                     <input input type="number" placeholder="0" style="color:red; border-color: red"  <?php echo $btnStatus?> onchange="sync()" name="Day3" Placeholder="0"  value="<?php echo $get_day3?>"class="form-control" id="day3"></div>
                       </div>           
                     </div>
                   </div>
@@ -688,7 +695,18 @@
                         
                       });
 
+ function sync2(int)
+{
+  var start = document.getElementById('start');
+  var end = document.getElementById('end');
+  var day1 = document.getElementById('day1');
+  var total = document.getElementById('total');
+  var rate1 = document.getElementById('rate1');
 
+  
+  day1.value = (end.value-start.value) + 1;
+  total.value = day1.value * rate1.value;
+  }
     </script>
 
 

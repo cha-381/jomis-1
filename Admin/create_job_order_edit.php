@@ -778,7 +778,7 @@
               <span class="close2">&times;</span>
            
         </div>
-     <form class="form-horizontal" method="POST" action="insert_time.php">
+     <form class="form-horizontal" method="POST" action="insert_time2.php">
 
 <input type="hidden" name="new_number" id="new1" value=""  class="form-control">  
 <input type="hidden" name="user_no" id="" value="<?php echo $db_user?>"  class="form-control"> 
@@ -829,7 +829,7 @@
               <span class="close3">&times;</span>
            
         </div>
-     <form class="form-horizontal" method="POST" action="insert_rate.php">
+     <form class="form-horizontal" method="POST" action="insert_rate2.php">
 
 <input type="hidden" name="new_number" id="new2" value=""  class="form-control">  
 <input type="hidden" name="user_no" id="" value="<?php echo $db_user?>"  class="form-control"> 
@@ -877,7 +877,7 @@
               <span class="close4">&times;</span>
            
         </div>
-     <form class="form-horizontal" method="POST" action="insert_days.php">
+     <form class="form-horizontal" method="POST" action="insert_days2.php">
 
 <input type="hidden" name="new_number" id="new4" value=""  class="form-control">  
 <input type="hidden" name="user_no" id="" value="<?php echo $db_user?>"  class="form-control"> 

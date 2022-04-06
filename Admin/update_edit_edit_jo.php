@@ -7,6 +7,7 @@
         $jo_order_no = $_POST['JobOrderNo'];
         $jo_period = $_POST['Period'];
         $jo_days = $_POST['RegDays'];
+        $jo_days_2 = $_POST['RegDays2'];
         $jo_sched = $_POST['Schedule'];
         $jo_rate = $_POST['Rate'];    
         $jo_time = $_POST['Time1'];
@@ -46,6 +47,7 @@
                Rate             = '$jo_rate',
                Period             = '$jo_period',
                RegDays             = '$jo_days',
+               RegDays2             = '$jo_days_2',
                Month1             = '$jo_month1',
                Time1             =  '$jo_time',
                Day1             = '$jo_no_day1',
