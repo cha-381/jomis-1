@@ -1,4 +1,4 @@
-<?php include 'includes/session.php'; ?>
+<?php include 'includes/session2.php'; ?>
 <?php include 'includes/header.php'; ?>
 <?php include 'includes/sidebar.php'; ?>
 <?php include 'includes/navbar.php'; ?>
@@ -32,6 +32,7 @@
            <div class="container">
             <div align="center">
                <?php echo $alert_msg;?>
+           
              </div>
            <i style="font-size:17px"><i style="color:red" align="center">*Laborers are directed to proceed to jobsite namely:</i></i>  
             
@@ -140,6 +141,27 @@
                       <?php echo number_format($sched_data['Rate1'],2);?>
                     </td>
 
+       <?php }elseif($sched_data['Period']=="" && $sched_data['Month1']!="" && $sched_data['Month2']!="") {?>
+                  <td style="text-align:left; font-size:13px"><?php echo $sched_data['Month1']." ".$sched_data['Days1'].","." ".$sched_data['Years'];?>
+                  <br>
+                      <?php echo $sched_data['Month2']." ".$sched_data['Days2'].","." ".$sched_data['Years'];?></td>
+                  <td style="text-align:left; font-size:13px"><?php echo $sched_data['Time2']." "."(".$sched_data['Schedule1'].")";?>
+                  <br>
+                        <?php echo $sched_data['Time3']." "."(".$sched_data['Schedule2'].")";?>
+                  </td>
+                   <td style="text-align:right"><?php echo number_format($sched_data['Rate1'],2);?>
+                   <br>
+                      <?php echo number_format($sched_data['Rate2'],2);?>
+                   </td>
+
+      <?php }elseif($sched_data['Period']=="" && $sched_data['Month1']!="" && $sched_data['Month2']=="") {?>
+                  <td style="text-align:left; font-size:13px"><?php echo $sched_data['Month1']." ".$sched_data['Days1'].","." ".$sched_data['Years'];?>
+                 </td>
+                  <td style="text-align:left; font-size:13px"><?php echo $sched_data['Time2']." "."(".$sched_data['Schedule1'].")";?>
+                  </td>
+                   <td style="text-align:right"><?php echo number_format($sched_data['Rate1'],2);?>
+                   </td>
+
 
        <?php }elseif($sched_data['Period']!="" && $sched_data['Month1']=="" && $sched_data['Month2']=="") {?>
                       <td style="text-align:left; font-size:13px"><?php echo $sched_data['Period']." ".$sched_data['RegDays']."-".$sched_data['RegDays2'].","." ".$sched_data['Years'];?> 
@@ -233,6 +255,8 @@
                 <div class="form-group"> 
                     <div class="col-sm-12">
                       <a href="edit_description.php?objid=<?php echo $countjo?>"  style="font-size: 13px;">Edit description</a>
+              
+                   
                       </div>
                       </div>
                   </form>
@@ -249,7 +273,7 @@
                      ?> 
                         <input type="text" id="laborers" class="form-control" name="jo_laborers" value="0" readonly>
                    <?php }elseif($finalcount!="") {?>
-                        <input type="text" id="laborers" class="form-control" name="jo_laborers" readonly value="<?php echo $totalcount;?>" required>
+                        <input type="text" id="laborers" class="form-control" name="jo_laborers" readonly value="<?php echo $count_emm;?>" required>
 
                     <?php } ?>   
                       </div>
@@ -263,13 +287,13 @@
                     <div class="col-sm-3">
                       <div class="form-group">
                         <label>Total Amount</label>
-                      <input type="text" id="amount" class="form-control" value="<?php echo number_format($finalcount_1,2);?>"  disabled>
+                      <input type="text" id="amount" class="form-control" value="<?php echo number_format($count_em2,2);?>"  disabled>
                       </div>
                       </div>
                  
                       </div>
 
-                   <input type="hidden" id="amount" class="form-control" name="job_date" value="<?php echo date("F d,Y");?>"  required>
+                   <input type="hidden" id="amount" class="form-control" name="job_date" value="<?php echo date("F d, Y");?>"  required>
 
                       <input type="hidden" id="amount" class="form-control" name="jo_amount" value="<?php echo $finalcount;?>"  required>
  <?php if ($db_department==$db_department) {?>
@@ -284,9 +308,9 @@
 <?php }?>
                     <input type="hidden" name="job_no" id="jonum" value="<?php echo $JobOrder;?>" class="form-control">  
 
-                     <input type="hidden" id="balance" name="jo_balance" class="form-control" value="<?php echo $count-$finalcount;?>" name="jo_bal" required>
+                       <input type="hidden" id="balance" name="job_prev" class="form-control" value="<?php echo $count-$finalcount;?>" required>
 
-                      <input type="hidden" id="prevbalance" name="job_prev" class="form-control" value="<?php echo $count;?>" name="jo_bal" required>
+                      <input type="hidden" id="prevbalance" name="jo_balance" class="form-control" value="<?php echo intval(preg_replace('/[^\d.]/', '',number_format($count,0)));?>"  required>
                      
                     <hr>
                      <div class="box-footer" align="right">
@@ -404,6 +428,7 @@
                       </div>
           </div>
                   
+
               <div class="form-group"> 
                      <div class="row">
                     <div class="col-sm-6">
