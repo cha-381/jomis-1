@@ -129,6 +129,7 @@ while ($result = $user_data->fetch(PDO::FETCH_ASSOC)) {
   $get_proj_charges =  $result['Charges'];
   $get_proj_years =  $result['Years'];
   $get_id_sched =  $result['ID_sched'];
+   $get_remark =  $result['Remarks'];
    
    
    }
@@ -174,6 +175,7 @@ while ($result = $user_data->fetch(PDO::FETCH_ASSOC)) {
     $get_prev_bal = $result['PreviousBalance'];
     $get_uniq_no = $result['Uniq'];
     $get_objid_pro=$result['objid_pro'];
+    $get_remarks=$result['Remarks'];
 
 
     $create_item1 = $result['Item1'];
@@ -604,6 +606,30 @@ while ($result1 = $get_em2_data->fetch(PDO::FETCH_ASSOC)) {
   $count_id =  $result1['id'];
 }
 
+$get_em3_sql= "SELECT SUM(`Amount`) as total, objid FROM `createjo` where `Charges`='$get_charges' AND `objid_pro`='$get_objid_pro' AND `objid`>'$get_objid'";
+$get_em3_data = $con->prepare($get_em3_sql);
+$get_em3_data->execute();
+$get_em3_data->setFetchMode(PDO::FETCH_ASSOC);
+while ($result1 = $get_em3_data->fetch(PDO::FETCH_ASSOC)) {
+  $count_em3 =  $result1['total'];
+}
+
+$get_em4_sql= "SELECT SUM(`Amount`) as total, objid FROM `createjo` where `Charges`='$get_charges' AND `objid_pro`='$get_objid_pro' AND `objid`<'$get_objid' ";
+$get_em4_data = $con->prepare($get_em4_sql);
+$get_em4_data->execute();
+$get_em4_data->setFetchMode(PDO::FETCH_ASSOC);
+while ($result1 = $get_em4_data->fetch(PDO::FETCH_ASSOC)) {
+  $count_em4 =  $result1['total'];
+}
+
+$get_em5_sql= "SELECT SUM(`Amount`) as total, objid FROM `createjo` where `Charges`='$get_charges' AND `objid_pro`='$get_objid_pro' ";
+$get_em5_data = $con->prepare($get_em5_sql);
+$get_em5_data->execute();
+$get_em5_data->setFetchMode(PDO::FETCH_ASSOC);
+while ($result1 = $get_em5_data->fetch(PDO::FETCH_ASSOC)) {
+  $count_em5 =  $result1['total'];
+}
+
 $get_create_sql= "SELECT * FROM createjo";
 $get_create_data = $con->prepare($get_create_sql);
 $get_create_data->execute();
@@ -757,6 +783,10 @@ $get_rate2_data->execute();
 $get_schedule_sql = "SELECT * FROM schedule ORDER BY LName ASC";
 $get_schedule_data = $con->prepare($get_schedule_sql);
 $get_schedule_data->execute();
+
+$get_schedules_sql = "SELECT * FROM schedule Where JobOrderNo='$JobOrder' ORDER BY id ASC";
+$get_schedules_data = $con->prepare($get_schedules_sql);
+$get_schedules_data->execute();
 
 $get_createjo_sql = "SELECT * FROM createjo";
 $get_createjo_data = $con->prepare($get_createjo_sql);
