@@ -43,6 +43,7 @@
     $jo_dept = $_POST['jo_dept'];
     $jo_abbre = $_POST['jo_abbre'];
     $jo_uniq = $_POST['jo_uniq'];
+     $jo_process = "Processed";
     $jo_total_amount = ($jo_rate * $jo_day1) + ($jo_rate1 * $jo_day2) + ($jo_rate2 * $jo_day3);
       
     $insert_schedule_sql  = "INSERT INTO schedule SET 
@@ -82,6 +83,7 @@
         Charges                  = :jo_charges,
         ID_sched                 = :jo_id,
         abbre                    = :jo_abbre,
+        Remarks                  = :jo_process,
         TotalAmount              =:jo_total_amount
         ";
 
@@ -123,6 +125,7 @@
          ':jo_dept'         => $jo_dept,
          ':jo_id'         => $jo_id,
          ':jo_abbre'         => $jo_abbre,
+         ':jo_process'         => $jo_process,
          ':jo_total_amount'   => $jo_total_amount
       ]);
 
