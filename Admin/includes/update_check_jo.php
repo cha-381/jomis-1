@@ -6,10 +6,12 @@
         $job_num = $_POST['id'];
         $job_no = $_POST['Remarks'];
         $no = $_POST['id_no'];  
+        $user = $_POST['Checkby'];
   
 
      $sql ="UPDATE schedule SET 
-            Remarks                   = '$job_no'
+            Remarks                   = '$job_no',
+            Checkby                    = '$user'
    
         WHERE   id = '$job_num' ";
 
