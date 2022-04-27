@@ -83,19 +83,27 @@
                     <?php if ($sched_data['JobOrderNo']==$JobOrder) {
                      ?> 
                     <td><?php echo $n++; ?></td>
-                    <td><?php echo $sched_data['FName']. " " . $sched_data['MName'][0] ."." . " " . $sched_data['LName'];?></td>
+                   <?php if ($sched_data['EName']=="" && $sched_data['FName']!="" && $sched_data['MName']!="" && $sched_data['LName']!="") {?> 
+                    <td><?php echo ucwords(strtoupper($sched_data['FName']. " " . $sched_data['MName'][0] ."." . " " . $sched_data['LName']));?></td>
+      <?php }elseif($sched_data['EName']!="" && $sched_data['FName']!="" && $sched_data['MName']!="" && $sched_data['LName']!="") {?> 
+                    <td><?php echo ucwords(strtoupper($sched_data['FName']. " " . $sched_data['MName'][0] ."." . " " . $sched_data['LName'].","." ". $sched_data['EName']));?></td>
+      <?php }elseif($sched_data['EName']=="" && $sched_data['FName']!="" && $sched_data['MName']=="" && $sched_data['LName']!="") {?> 
+                     <td><?php echo ucwords(strtoupper($sched_data['FName']. " " . $sched_data['LName']));?></td>
+      <?php }elseif($sched_data['EName']!="" && $sched_data['FName']!="" && $sched_data['MName']=="" && $sched_data['LName']!="") {?> 
+                      <td><?php echo ucwords(strtoupper($sched_data['FName']. " " .$sched_data['LName'].","." ".$sched_data['EName']));?></td>
+      <?php } ?>
 
-      <?php if ($sched_data['Period']!="" && $sched_data['Month1']!="" && $sched_data['Month2']!="") {?> 
-                  <td style="text-align:left; font-size:14px"><?php echo $sched_data['Period']." ".$sched_data['RegDays'].","." ".$sched_data['Years'];?> 
+     <?php if ($sched_data['Period']!="" && $sched_data['Month1']!="" && $sched_data['Month2']!="") {?> 
+                  <td style="text-align:left; font-size:13px"><?php echo $sched_data['Period']." ".$sched_data['RegDays']."-".$sched_data['RegDays2'].","." ".$sched_data['Years'];?> 
                   <br>
                       <?php echo $sched_data['Month1']." ".$sched_data['Days1'].","." ".$sched_data['Years'];?>
                   <br>
                       <?php echo $sched_data['Month2']." ".$sched_data['Days2'].","." ".$sched_data['Years'];?></td>
-                  <td style="text-align:left; font-size:14px"><?php echo $sched_data['Time1'];?>
+                  <td style="text-align:left; font-size:13px"><?php echo $sched_data['Time1']." "."(".$sched_data['Schedule'].")";?>
                   <br>
-                       <?php echo $sched_data['Time2'];?>
+                       <?php echo $sched_data['Time2']." "."(".$sched_data['Schedule1'].")";?>
                   <br>
-                        <?php echo $sched_data['Time3'];?>
+                        <?php echo $sched_data['Time3']." "."(".$sched_data['Schedule2'].")";?>
                   </td>
                    <td style="text-align:right"><?php echo  number_format($sched_data['Rate'],2);?>
                    <br>
@@ -105,12 +113,12 @@
                    </td>
 
       <?php }elseif($sched_data['Period']!="" && $sched_data['Month1']!="" && $sched_data['Month2']=="") {?>
-                    <td style="text-align:left; font-size:14px"><?php echo $sched_data['Period']." ".$sched_data['RegDays'].","." ".$sched_data['Years'];?> 
+                    <td style="text-align:left; font-size:13px"><?php echo $sched_data['Period']." ".$sched_data['RegDays']."-".$sched_data['RegDays2'].","." ".$sched_data['Years'];?> 
                   <br>
                       <?php echo $sched_data['Month1']." ".$sched_data['Days1'].","." ".$sched_data['Years'];?></td>
-                   <td style="text-align:left; font-size:14px"><?php echo $sched_data['Time1'];?>
+                    <td style="text-align:left; font-size:13px"><?php echo $sched_data['Time1']." "."(".$sched_data['Schedule'].")";?>
                   <br>
-                       <?php echo $sched_data['Time2'];?>
+                       <?php echo $sched_data['Time2']." "."(".$sched_data['Schedule1'].")";?>
                     </td>
                     <td style="text-align:right"><?php echo number_format($sched_data['Rate'],2);?>
                     <br>
@@ -119,9 +127,9 @@
 
 
        <?php }elseif($sched_data['Period']!="" && $sched_data['Month1']=="" && $sched_data['Month2']=="") {?>
-                      <td style="text-align:left; font-size:14px"><?php echo $sched_data['Period']." ".$sched_data['RegDays'].","." ".$sched_data['Years'];?> 
+                      <td style="text-align:left; font-size:13px"><?php echo $sched_data['Period']." ".$sched_data['RegDays']."-".$sched_data['RegDays2'].","." ".$sched_data['Years'];?> 
                     </td>
-                    <td style="text-align:left; font-size:14px"><?php echo $sched_data['Time1'];?></td>
+                     <td style="text-align:left; font-size:13px"><?php echo $sched_data['Time1']." "."(".$sched_data['Schedule'].")";?>
                      <td style="text-align:right"><?php echo number_format($sched_data['Rate'],2);?></td>
 
                       <?php } ?> 
@@ -146,6 +154,56 @@
                 </table>
               </form>
               </div>
+
+        <form role="form" method="get" action="<?php htmlspecialchars("PHP_SELF"); ?>">
+              <div class="card-body text-m">
+                <table id="user" class="table-secondary">
+                  <thead>
+                   
+                      <tr style="font-size: 14px; background-color: hsla(89, 43%, 51%, 0.3)">
+                      <th width="15%" style="text-align:center;">ITEM</th>
+                      <th width="50%"style="text-align:center;background-color: hsla(99, 43%, 51%, 0.3)">Description</th>
+                     
+                    </tr>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                     <?php while ($get_project = $get_create_data-> fetch(PDO::FETCH_ASSOC)) { ?>
+                      <?php if ($get_project['JobOrderNo']==$JobOrder) {
+                     ?> 
+          
+                    <tr>
+                    <td style="text-align:left; font-size:12px"><?php echo $get_project['Item1'];?></td>
+                    <td style="text-align:left; font-size:12px"><?php echo $get_project['Description1'];?></td>
+                  </tr>
+                    <tr>
+                    <td style="text-align:left; font-size:12px"><?php echo $get_project['Item2'];?></td>
+                    <td style="text-align:left; font-size:12px"><?php echo $get_project['Description2'];?></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left; font-size:12px"><?php echo $get_project['Item3'];?></td>
+                   <td style="text-align:left; font-size:12px"><?php echo $get_project['Description3'];?></td>
+                 </tr>
+                 <tr>
+                   <td style="text-align:left; font-size:12px"><?php echo $get_project['Item4'];?></td>
+                   <td style="text-align:left; font-size:12px"><?php echo $get_project['Description4'];?></td></tr>
+                   <tr>
+                   <td style="text-align:left; font-size:12px"><?php echo $get_project['Item5'];?></td>
+                   <td style="text-align:left; font-size:12px"><?php echo $get_project['Description5'];?></td>
+                          </tr>
+
+                      <div class="form-group">
+                 
+                       <?php }?>
+                   <?php } ?>
+
+                  </tbody>
+                </table>
+                <div class="form-group"> 
+                    <div class="col-sm-12">
+                      <a href=""  style="font-size: 13px;">Edit description</a>
 
                <form class="form-horizontal" method="POST" action="<?php htmlspecialchars("PHP_SELF"); ?>">
 
@@ -183,8 +241,8 @@
                     
                     <div class="col-sm-5">
                       <div class="form-group"> 
-                        <label>Others</label>
-           <input type="text" id="amount" class="form-control" name="job_date" value="<?php echo $scheds?>"  disabled>
+                       
+           <input type="hidden" id="amount" class="form-control" name="job_date" value="<?php echo $scheds?>"  disabled>
        
                       </div>
                       </div>  
