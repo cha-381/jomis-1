@@ -128,6 +128,27 @@
                       <?php echo number_format($sched_data['Rate2'],2);?>
                    </td>
 
+                      <?php }elseif($sched_data['Period']=="" && $sched_data['Month1']!="" && $sched_data['Month2']!="") {?>
+                  <td style="text-align:left; font-size:13px"><?php echo $sched_data['Month1']." ".$sched_data['Days1'].","." ".$sched_data['Years'];?>
+                  <br>
+                      <?php echo $sched_data['Month2']." ".$sched_data['Days2'].","." ".$sched_data['Years'];?></td>
+                  <td style="text-align:left; font-size:13px"><?php echo $sched_data['Time2']." "."(".$sched_data['Schedule1'].")";?>
+                  <br>
+                        <?php echo $sched_data['Time3']." "."(".$sched_data['Schedule2'].")";?>
+                  </td>
+                   <td style="text-align:right"><?php echo number_format($sched_data['Rate1'],2);?>
+                   <br>
+                      <?php echo number_format($sched_data['Rate2'],2);?>
+                   </td>
+
+      <?php }elseif($sched_data['Period']=="" && $sched_data['Month1']!="" && $sched_data['Month2']=="") {?>
+                  <td style="text-align:left; font-size:13px"><?php echo $sched_data['Month1']." ".$sched_data['Days1'].","." ".$sched_data['Years'];?>
+                 </td>
+                  <td style="text-align:left; font-size:13px"><?php echo $sched_data['Time2']." "."(".$sched_data['Schedule1'].")";?>
+                  </td>
+                   <td style="text-align:right"><?php echo number_format($sched_data['Rate1'],2);?>
+                   </td>
+
       <?php }elseif($sched_data['Period']!="" && $sched_data['Month1']!="" && $sched_data['Month2']=="") {?>
                     <td style="text-align:left; font-size:14px"><?php echo $sched_data['Period']." ".$sched_data['RegDays']."-".$sched_data['RegDays2'].","." ".$sched_data['Years'];?> 
                   <br>
@@ -268,6 +289,8 @@
                    <input type="hidden" id="" class="form-control" name="" value="<?php echo date("F d,Y");?>">
 
                       <input type="hidden" id="amt" class="form-control" name="Amount" value="<?php echo $count_em2;?>">
+
+                       <input type="hidden" class="form-control" name="" value="<?php echo $count_em3;?>">
  
                       <input type="hidden" id="" class="form-control"  name="Charges" value="<?php echo $get_charges;?>"  >
 
@@ -281,14 +304,26 @@
 
   <?php   while ($get = $get_proj_data->fetch(PDO::FETCH_ASSOC)) { ?>
               <?php if ($get['objid']==$get_objid_pro) { ?>
-                <label style="text-align:right; font-size: 18px;"><i>Available Balance:</i> <b class="mb-0 font-weight-bold bg-yellow"><?php echo number_format($get['Actual'],2);?> </b></label>
-                   
+                <label style="text-align:right; font-size: 18px;"><i>Available Balance:</i> <b class="mb-0 font-weight-bold bg-yellow"><?php echo number_format($get['ProjectBudget']-$count_em4,2);?> </b></label>
+                
+                 <input type="hidden" id=""  name="Balance" value="<?php echo $get['ProjectBudget']-$count_em5;?>" class="form-control">    
                     
-                    <input type="hidden" id="jonum" name="JobOrderNo" value="<?php echo $JobOrder;?>" class="form-control">  
+                    <input type="hidden" id="jonum" name="JobOrderNo" value="<?php echo $JobOrder;?>" class="form-control">
 
-              <input type="hidden" id="balance"  val class="form-control">
+          
+                <input type="hidden" name="Subject" value="<?php echo "";?>" class="form-control">  
+         
+                        
+              <input type="hidden" id="balance"  class="form-control">
 
-                      <input type="hidden" id="prevbalance" name="PreviousBalance" class="form-control" value="<?php echo $get['Actual']-$count_em2;?>" >
+               <input type="hidden" name="Bal" value="<?php echo $get['ProjectBudget']-$count_em4-$count_em2;?>" name="" class="form-control">
+             
+               <input type="hidden" id="balance" name="PreviousBalance" value="<?php echo $get['ProjectBudget']-$count_em4;?>" name="" class="form-control">
+
+              <input type="hidden" id="balance"  value="<?php echo $get_objid;?>" name="objid" class="form-control">
+
+                    
+                      <input type="hidden" id="prevbalance"  class="form-control" value="<?php echo $get_prev_bal-$count_em2;?>" >
 
                         <input type="hidden" id="" class="form-control" name="code" value="<?php echo $get['code'];?>" >
                <?php } ?>
