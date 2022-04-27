@@ -42,7 +42,7 @@
                 <?php echo $alert_msg; ?>
                  <div class="card card-outline card-secondary">
                   <div class="jumbotron">
-                    <i style="font-size:25px"><?php echo "JOB ORDER No."?><i style="color:blue" ></i></i> <b class="mb-0 font-weight-bold bg-yellow" style="font-size:25px"><?php echo $get_uniq_no."-".$JobOrder;?></b>  
+                    <i style="font-size:25px"><?php echo "JOB ORDER No."?><i style="color:blue" ></i></i> <b class="mb-0 font-weight-bold bg-yellow" style="font-size:25px"><?php echo $JobOrder;?></b>  
                 <div class="card-body">
              <div class="form-group">
 
