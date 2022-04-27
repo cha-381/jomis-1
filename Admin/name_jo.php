@@ -64,7 +64,7 @@
                    <label align="left">Period Covered</label>   
                    <div class="input-group">
                   
-                   <input type="text" name="datefilter" value="" class="form-control" required></span>
+                   <input type="text" name="datefilter" value="" <?php echo $btnStatus?> class="form-control" required></span>
                   </div>
                   </div>
                     </div>
