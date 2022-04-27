@@ -150,9 +150,9 @@
               <?php }elseif($get_list['Remarks']=="Unprocessed") {?>  
                   <td style="text-align:center; color:blue"><?php echo $get_list['Remarks'];?></td>
                <?php }elseif($get_list['Remarks']=="Approved") {?>  
-                  <td style="text-align:center; color:green"><?php echo $get_list['Remarks'];?></td>
+                  <td style="text-align:center; color:green"><a href="check2.php?objid=<?php echo $get_list['objid']?>"><?php echo $get_list['Remarks'];?></a></td>
                 <?php }elseif($get_list['Remarks']=="Dispproved") {?> 
-                  <td style="text-align:center; color:red"><?php echo $get_list['Remarks'];?></td>
+                  <td style="text-align:center; color:red"><a href="check2.php?objid=<?php echo $get_list['objid']?>"><?php echo $get_list['Remarks'];?></a></td>
                            <?php } ?> 
                              <?php } ?>                       
                     </td>
