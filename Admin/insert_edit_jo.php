@@ -19,6 +19,7 @@
     $jo_rate = $_POST['rate'];
      $jo_period = $_POST['period'];
      $jo_regdays = $_POST['jo_regdays'];
+      $jo_regdays2 = $_POST['jo_regdays2'];
     $jo_time = $_POST['time1'];
     $jo_empcode = $_POST['empcode'];
     $jo_middle = $_POST['jo_middle'];
@@ -45,9 +46,11 @@
     $jo_objid_pro = $_POST['jo_objid_pro'];
     $jo_prev_amount = $_POST['jo_prev_amount'];
     $jo_prev_prj = $_POST['jo_prev_prj'];
+    $jo_process = "Processed";
     $jo_total_amount = ($jo_rate * $jo_day1) + ($jo_rate1 * $jo_day2) + ($jo_rate2 * $jo_day3);
     $jo_new_amount=  $jo_prev_amount + $jo_total_amount;
     $jo_new_prj_amount=  $jo_prev_prj - $jo_total_amount;
+    $jo_new_prev_amount=  $jo_new_prj_amount - $jo_new_amount;
 
       
     $insert_schedule_sql  = "INSERT INTO schedule SET 
@@ -60,7 +63,8 @@
         Schedule2                 = :schedule2,
         Rate                     = :rate,
         Period                   = :period,
-         RegDays                   = :jo_regdays,
+        RegDays                   = :jo_regdays,
+        RegDays2                   = :jo_regdays2,
         Years                   = :jo_years,
         Time1                    = :time1,
         EmpCode                  = :empcode,
@@ -88,6 +92,7 @@
           Amount                     = :jo_new_amount,
           PrjAmount                     = :jo_new_prj_amount,
          ID_sched                     = :jo_id,
+        Remarks                  = :jo_process,
          abbre                    = :jo_abbre,
           TotalAmount             =:jo_total_amount
         ";
@@ -103,6 +108,7 @@
         ':schedule2'          => $jo_schedule2,
         ':period'            => $jo_period,
         ':jo_regdays'         => $jo_regdays,
+        ':jo_regdays2'         => $jo_regdays2,
         ':jo_years'         => $jo_years,
         ':rate'              => $jo_rate,
         ':time1'             => $jo_time,
@@ -130,7 +136,8 @@
          ':jo_prev_prj'         => $jo_prev_prj,
          ':jo_new_amount'         => $jo_new_amount,
          ':jo_new_prj_amount'         => $jo_new_prj_amount,
-          ':jo_id'         => $jo_id,
+          ':jo_id'             => $jo_id,
+          ':jo_process'         => $jo_process,
           ':jo_abbre'         => $jo_abbre,
          ':jo_total_amount'   => $jo_total_amount
 
@@ -139,12 +146,12 @@
     
        $sql ="UPDATE createjo SET 
               Amount            = '$jo_new_amount',
-              PreviousBalance   = '$jo_new_prj_amount',
               Laborers                = '$jo_total'
 
         WHERE   objid                = '$no'  
 
      ";
+    
       $sql1 ="UPDATE schedule SET 
               Amount            = '$jo_new_amount',
               PrjAmount          = '$jo_new_prj_amount',
