@@ -66,7 +66,16 @@
                     <td style="text-align:center;"><?php echo $get_list['PosingDate'];?></td>
                     <td style="text-align:center;"><u><a href="see_jo.php?objid=<?php echo
                             $get_list['id_no']; ?>"><?php echo $get_list['JobOrderNo'];?></a></u></td>
-                    <td style="text-align:left;"><?php echo  $get_list['LName'].","." ".$get_list['FName']." ". $get_list['MName'][0] .".";?></td>
+                 <?php if ($get_list['EName']=="" &&$get_list['FName']!="" && $get_list['MName']!="" && $get_list['LName']!="") {?> 
+                    <td><?php echo ucwords(strtoupper($get_list['FName']. " " . $get_list['MName'][0] ."." . " " . $get_list['LName']));?></td>
+      <?php }elseif($get_list['EName']!="" && $get_list['FName']!="" && $get_list['MName']!="" && $get_list['LName']!="") {?> 
+                    <td><?php echo ucwords(strtoupper($get_list['FName']. " " . $get_list['MName'][0] ."." . " " . $get_list['LName'].","." ". $get_list['EName']));?></td>
+      <?php }elseif($get_list['EName']=="" && $get_list['FName']!="" && $get_list['MName']=="" && $get_list['LName']!="") {?> 
+                     <td><?php echo ucwords(strtoupper($get_list['FName']. " " . $get_list['LName']));?></td>
+      <?php }elseif($get_list['EName']!="" && $get_list['FName']!="" && $get_list['MName']=="" && $get_list['LName']!="") {?> 
+                      <td><?php echo ucwords(strtoupper($get_list['FName']. " " .$get_list['LName'].","." ".$get_list['EName']));?></td>
+      <?php } ?>
+
                      <td style="text-align:center;"><?php echo $get_list['PeriodCovered'];?></td>
                       
                   
