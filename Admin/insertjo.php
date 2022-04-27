@@ -17,10 +17,11 @@
     $jo_user= $_POST['user'];
     $jo_dept_code= $_POST['jo_dept_code'];
     $job_uniq = $_POST['uniq'];
-    $job_date = $_POST['job_date'];
+    $job_date = date('F d, Y', strtotime($_POST['job_date']));
     $jo_objid_pro = $_POST['jo_objid_pro'];
     $jo_sub= $_POST['jo_sub'];
     $jo_num= $_POST['jo_objid'];
+    $jo_process = "Unprocessed";
   
 
   
@@ -33,10 +34,12 @@
         ProjectBudget            = :jo_budget,
         PreviousBalance          = :jo_previous,
         Department               = :jo_depart,
+        DateJo                   = :job_date,
         abbre                    = :abbre,
         user_id                  = :user,
         objid_pro                = :objid_pro,
         Subject                  = :jo_sub,
+        Remarks                  = :jo_process,
         PeriodCovered            = :datefilter
         ";
 
@@ -51,9 +54,11 @@
         ':jo_previous'          => $jo_previous,
         ':jo_depart'            => $jo_depart,
         ':jo_sub'               => $jo_sub,
+        ':job_date'             => $job_date,
         ':abbre'                => $jo_abbre,
         ':user'                 => $jo_user,
         ':objid_pro'            => $jo_objid_pro,
+        ':jo_process'           => $jo_process,
         ':datefilter'           => $jo_period
    
       ]);
