@@ -12,7 +12,7 @@ $btnAdd = 'enabled';
 
  $finalcount="0";
   $alert_msg = '';     
-  $alert_msg1 = '';  
+  $alert_msg1 = ''; 
    $alert_msg3 = '';  
  $sss="";
   $pag_ibig="";
@@ -97,6 +97,7 @@ while ($result = $user_data->fetch(PDO::FETCH_ASSOC)) {
     $get_middlen =  $result['MName'];
     $get_lastn =  $result['LName'];
     $get_extn =  $result['EName'];
+    $get_empphoto =  $result['EmpPhoto'];
     $get_sched_code =  $result['EmpCode'];
     $get_rate1 =  $result['Rate'];
     $get_rate2 =  $result['Rate1'];
@@ -131,6 +132,7 @@ while ($result = $user_data->fetch(PDO::FETCH_ASSOC)) {
   $get_proj_charges =  $result['Charges'];
   $get_proj_years =  $result['Years'];
   $get_id_sched =  $result['ID_sched'];
+  $get_remark =  $result['Remarks'];
    
    
    }
@@ -251,6 +253,7 @@ if (isset($_GET['objid'])) {
     while ($result = $get_job_data_data->fetch(PDO::FETCH_ASSOC)) {
     $Job = $result['JobOrderNo'];
     $Bal = $result['PreviousBalance'];
+    $desc = $result['Description1'];
 }
 }
 
@@ -496,8 +499,6 @@ while ($result1 = $get_noo_data->fetch(PDO::FETCH_ASSOC)) {
 }
 
 
-
-
 $get_jo_sql= "SELECT * FROM `createjo`";
 $get_jo_data = $con->prepare($get_jo_sql);
 $get_jo_data->execute();
@@ -511,7 +512,6 @@ while ($result1 = $get_jo_data->fetch(PDO::FETCH_ASSOC)) {
 }
 
 
-
 $get_final_sql= "SELECT `schedule`.`JobOrderNo`, COUNT(`createjo`.`JobOrderNo`) as total FROM  `createjo`left join  `schedule` on `createjo`.`JobOrderNo`=`schedule`.`JobOrderNo` where `createjo`.`JobOrderNo` IS NOT NULL group by `createjo`.`JobOrderNo`";
 $get_final_data = $con->prepare($get_final_sql);
 $get_final_data->execute();
@@ -519,7 +519,6 @@ $get_final_data->setFetchMode(PDO::FETCH_ASSOC);
 while ($result1 = $get_final_data->fetch(PDO::FETCH_ASSOC)) {
   $totalcount =  $result1['total'];
 }
-
 
 
 $get_jo_sql= "SELECT * FROM `project`";
@@ -547,7 +546,9 @@ while ($result1 = $get_pay_data->fetch(PDO::FETCH_ASSOC)) {
  
   $payroll1 =$result1['total'];
   $payroll2 =$payroll1+1;
+  
 }
+
 
   $payroll = "P".date('Y')."_".$payroll2;
 
@@ -588,6 +589,7 @@ $get_em_data->setFetchMode(PDO::FETCH_ASSOC);
 while ($result1 = $get_em_data->fetch(PDO::FETCH_ASSOC)) {
   $count_em =  $result1['total']+1;
 }
+
 
 
 $get_create_sql= "SELECT * FROM createjo";
@@ -647,6 +649,7 @@ $get_department_data->execute();
 $get_details_sql = "SELECT * FROM jo_details";
 $get_details_data = $con->prepare($get_details_sql);
 $get_details_data->execute();
+
 
 $get_year_sql = "SELECT * FROM year";
 $get_year_data = $con->prepare($get_year_sql);
@@ -750,13 +753,18 @@ $get_schedule_sql = "SELECT * FROM schedule ORDER BY LName ASC";
 $get_schedule_data = $con->prepare($get_schedule_sql);
 $get_schedule_data->execute();
 
+$get_schedules_sql = "SELECT * FROM schedule ORDER BY LName ASC";
+$get_schedules_data = $con->prepare($get_schedules_sql);
+$get_schedules_data->execute();
+
 $get_createjo_sql = "SELECT * FROM createjo";
 $get_createjo_data = $con->prepare($get_createjo_sql);
 $get_createjo_data->execute();
 
-$get_payroll_sql = "SELECT * FROM payroll";
+$get_payroll_sql = "SELECT * FROM payroll ORDER BY objid DESC";
 $get_payroll_data = $con->prepare($get_payroll_sql);
 $get_payroll_data->execute();
+
 
 $get_sql = "SELECT * FROM sss";
 $get_data = $con->prepare($get_sql);
@@ -781,7 +789,7 @@ $get_combine3_data = $con->prepare($get_combine3_sql);
 $get_combine3_data->execute();
 
 
-$get_sched_sql = "SELECT * FROM createjo INNER JOIN payroll INNER JOIN schedule WHERE `createjo`.`objid` = `payroll`.`id_no` AND `schedule`.`JobOrderNo` = `payroll`.`JobOrderNo` AND `schedule`.`no`= 1 ORDER BY `schedule`.`PayrollNo` DESC ";
+$get_sched_sql = "SELECT * FROM createjo INNER JOIN payroll INNER JOIN schedule INNER JOIN project WHERE `createjo`.`objid` = `payroll`.`id_no` AND `schedule`.`JobOrderNo` = `payroll`.`JobOrderNo` AND `schedule`.`objid_pro` = `project`.`objid` AND `schedule`.`no`= 1 ORDER BY `schedule`.`PayrollNo` DESC ";
 $get_sched_data = $con->prepare($get_sched_sql);
 $get_sched_data->execute();
 
