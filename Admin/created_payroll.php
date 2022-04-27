@@ -57,9 +57,13 @@
 
 <input type="hidden" name="status" id="status" value="<?php echo "Done"?>" class="form-control"> 
           
-    
+   <input type="hidden" name="dept"  value="<?php echo $db_department?>" class="form-control"> 
+   <input type="hidden" name="period"  value="<?php echo $get_starting_date?>" class="form-control"> 
+  
+
                      <div class="row">
                     <div class="col-sm-6">
+
                        <div class="form-group"> 
                     <label style="font-size:28px"> Covered Period </label>
                   </div>
@@ -127,7 +131,7 @@
                     <div class="col-sm-5">
                       <div class="form-group">
                         <label>Amount</label>
-                        <input type="text"  id="pay_amount"  onchange="sync2()" style="text-align: right;" class="form-control"></div>
+                        <input type="text"  id="pay_amount" <?php echo $btnStatus;?> onchange="sync2()" style="text-align: right;" class="form-control"></div>
                       </div>
                        </div>
                         </div>
@@ -240,4 +244,3 @@ function addCommas(x) {
 
 
     
->?
