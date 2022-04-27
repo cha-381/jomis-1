@@ -16,6 +16,9 @@
          $job_prjname = $_POST['job_prjname'];
          $job_date = $_POST['job_date'];
          $job_pro = $_POST['job_pro'];
+         $job_prev = $_POST['job_prev'];
+           $job_process = "Processed";
+
   
   
 
@@ -24,14 +27,16 @@
             Amount                 = '$jo_amount',
             PreviousBalance        = '$jo_balance',
             DateJo                 = '$job_date',
-            Laborers               = '$jo_laborers'
+            Laborers               = '$jo_laborers',
+            Remarks                = '$job_process'
+
 
       
         WHERE   JobOrderNo = '$job_no'";
 
 
   $sql1 ="UPDATE project SET 
-                Balance   = '$jo_balance'
+                Balance   = '$job_prev'
         WHERE   objid = '$job_pro'";
 
     $sql2 ="UPDATE schedule SET 
