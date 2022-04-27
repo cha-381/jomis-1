@@ -49,6 +49,7 @@
                     <th  width="1%" style="text-align:center;"></th>
                       <th  style="text-align:center;">Amount</th>
                       <th style="text-align:center;">Action</th>
+                      <th style="text-align:center;">Remarks</th>
 
                     </tr>
 
@@ -68,32 +69,54 @@
                     <td style="text-align:right;"><?php echo "P"?></td>
                      <td style="text-align:right;"><?php echo number_format($get_list['Amount'], 2);?></td>
                     <td align="center">
-                      <?php if ( $get_list['Laborers']>"7") {
+                      <?php if ( $get_list['Laborers']>"7"  AND $get_list['Subject']=="" OR $get_list['Laborers']>"7" AND $get_list['Subject']=="Done") {
                      ?>  
                           <a class="btn btn-outline-success btn-xs" href="../plugins/TCPDF/User/job_order2.php?JobOrderNo=<?php echo
                             $get_list['JobOrderNo']; ?>" data-toggle="tooltip" title="Print"> <img src="../dist/img/print.png" alt="" class="brand-image img-transparent" width="30" height="30" style="opacity: ">
                           </a>  
-                       <?php }elseif($get_list['Laborers']<="7"){
+                       <?php }elseif($get_list['Laborers']<="7" AND $get_list['Subject']=="" OR $get_list['Laborers']<="7" AND $get_list['Subject']=="Done"){
                      ?>  
                       <a class="btn btn-outline-success btn-xs" href="../plugins/TCPDF/User/job_order.php?JobOrderNo=<?php echo
                             $get_list['JobOrderNo']; ?>" data-toggle="tooltip" title="Print"> <img src="../dist/img/print.png" alt="" class="brand-image img-transparent" width="30" height="30" style="opacity: ">
-                          </a>   <?php } ?>
+                          </a>  
+
+                    <?php }elseif($get_list['Laborers']<="7" AND $get_list['Subject']="Modified" OR $get_list['Laborers']>"7"  AND $get_list['Subject']=="Modified"){
+                     ?>  
+                      <a class="btn btn-default btn-xs" href="" data-toggle="tooltip" title="Modified has been made, you need to update the J.O. to enable printing"> <img src="../dist/img/printer3_delete.png" alt="" class="brand-image img-transparent" width="30" height="30" style="opacity: ">
+                          </a>   
+                   <?php } ?>
 
                     <?php if ( $get_list['status']=="Done" And $get_list['Filenames']=="") {
                      ?>  
                      <a class="btn btn-outline-warning btn-xs" href="attachement.php?objid=<?php echo
-                            $get_list['id_no']; ?>" data-toggle="tooltip" title="Attached File"><img src="../dist/img/attache.png" alt="" class="brand-image img-transparent" width="30" height="30" style="opacity: ">
+                            $get_list['objid']; ?>" data-toggle="tooltip" title="Attached File"><img src="../dist/img/attache.png" alt="" class="brand-image img-transparent" width="30" height="30" style="opacity: ">
                           </a>    
 
                     <a class="btn btn-outline-warning btn-xs" href="payroll.php?objid=<?php echo $get_list['objid_pro']?>"  data-toggle="tooltip" title="Payroll"><img src="../dist/img/list.png" alt="" class="brand-image img-square" width="30" height="30" style="opacity: ">
-                          </a>   
+                          </a> 
+
+                    <?php }elseif( $get_list['Amount']=="" ) {
+                     ?>   
+                     <a class="btn btn-outline-info btn-xs" href="create_job_order_edit.php?objid=<?php echo $get_list['objid']; ?>" data-toggle="tooltip" title="Edit"><img src="../dist/img/pen.png" alt="" class="brand-image img-transparent" width="30" height="30" style="opacity: ">
+                          </a>  
+
+                      <?php }elseif( $get_list['Subject']=="Done" ) {?>  
+                         <a class="btn btn-outline-warning btn-xs" href="created_payroll.php?objid=<?php echo $get_list['objid']?>" data-toggle="tooltip" title="Created Payroll"><img src="../dist/img/pay.png" alt=""  class="brand-image img-square" width="40" height="30" style="opacity: ">
+                          </a> 
+
+                        
+
+                          <a class="btn btn-outline-warning btn-xs" href="attachement.php?objid=<?php echo $get_list['objid']; ?>" data-toggle="tooltip" title="Attached File"><img src="../dist/img/attache.png" alt="" class="brand-image img-square" width="30" height="30" style="opacity: ">
+                          </a> 
+
+
 
                     <?php }elseif( $get_list['status']=="Done" And $get_list['Filenames']!="" Or $get_list['status']=="" And $get_list['Filenames']!="") {
                      ?>  
                      <a class="btn btn-outline-primary btn-xs" href="<?php echo $get_list['Filenames']?> "data-toggle="tooltip" title="Approved File"><img src="../dist/img/approve.png" alt="" class="brand-image img-square" width="30" height="30" style="opacity: ">
                           </a>  
 
-                        <a class="btn btn-outline-warning btn-xs" href="payroll.php?objid=<?php echo $get_list['objid_pro']?>" data-toggle="tooltip" title="Payroll"><img src="../dist/img/list.png" alt="" class="brand-image img-square" width="30" height="30" style="opacity: ">
+                        <a class="btn btn-outline-warning btn-xs" href="payroll.php?id_num=<?php echo $get_list['objid_pro']?>" data-toggle="tooltip" title="Payroll"><img src="../dist/img/list.png" alt="" class="brand-image img-square" width="30" height="30" style="opacity: ">
                           </a>   
 
                     <?php }elseif($get_list['status']!="Done" AND $get_list['Filenames']=="" AND $get_list['Amount']!="") {?>
@@ -104,8 +127,9 @@
                           <a class="btn btn-outline-warning btn-xs" href="created_payroll.php?objid=<?php echo $get_list['objid']?>" data-toggle="tooltip" title="Created Payroll"><img src="../dist/img/pay.png" alt=""  class="brand-image img-square" width="40" height="30" style="opacity: ">
                           </a> 
 
-                          <a class="btn btn-outline-warning btn-xs" href="attachement.php?objid=<?php echo
-                            $get_list['id_no']; ?>" data-toggle="tooltip" title="Attached File"><img src="../dist/img/attache.png" alt="" class="brand-image img-square" width="30" height="30" style="opacity: ">
+                        
+
+                          <a class="btn btn-outline-warning btn-xs" href="attachement.php?objid=<?php echo $get_list['objid']; ?>" data-toggle="tooltip" title="Attached File"><img src="../dist/img/attache.png" alt="" class="brand-image img-square" width="30" height="30" style="opacity: ">
                           </a> 
                         
                       <?php }elseif($get_list['status']!="Done" AND $get_list['Filenames']=="" AND $get_list['Amount']=="") {?>    
@@ -117,10 +141,19 @@
                           </a> 
 
                           <a class="btn btn-outline-warning btn-xs" href="attachement.php?objid=<?php echo
-                            $get_list['id_no']; ?>" data-toggle="tooltip" title="Attached File"><img src="../dist/img/attache.png" alt="" class="brand-image img-square" width="30" height="30" style="opacity: ">
+                            $get_list['objid']; ?>" data-toggle="tooltip" title="Attached File"><img src="../dist/img/attache.png" alt="" class="brand-image img-square" width="30" height="30" style="opacity: ">
                           </a> 
-  <?php } ?>    
-                        
+                        <?php } ?>  
+
+            <?php if($get_list['Remarks']=="Processed"){?>
+                   <td style="text-align:center; color:orange"><a href="check2.php?objid=<?php echo $get_list['objid']?>"><?php echo $get_list['Remarks'];?></a></td>
+              <?php }elseif($get_list['Remarks']=="Unprocessed") {?>  
+                  <td style="text-align:center; color:blue"><?php echo $get_list['Remarks'];?></td>
+               <?php }elseif($get_list['Remarks']=="Approved") {?>  
+                  <td style="text-align:center; color:green"><?php echo $get_list['Remarks'];?></td>
+                <?php }elseif($get_list['Remarks']=="Dispproved") {?> 
+                  <td style="text-align:center; color:red"><?php echo $get_list['Remarks'];?></td>
+                           <?php } ?> 
                              <?php } ?>                       
                     </td>
 
