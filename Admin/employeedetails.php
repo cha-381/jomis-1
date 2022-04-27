@@ -34,9 +34,9 @@
           
               <div class="info-box-content">
               
-                <span class="info-box-text">Total Numbers of Employees Encoded</span>
+                <span class="info-box-text">Total Numbers of Employees</span>
                 <span class="info-box-number">
-                <?php echo $get_all_data->rowCount()-2?>
+                <?php echo $get_all_data->rowCount()+164-112?>
              
                 </span>
               </div>
@@ -137,7 +137,7 @@
 <?php }elseif($get_emp_mname!='' && $get_emp_fname!='' && $get_emp_lname!='' && $get_emp_ename=='') {?>
    <input type="hidden" class="form-control" name="Status" readonly="true" value="<?php echo $get_emp_id;?>" >
 
-                <h3 class="profile-username text-center"><?php echo ucwords(strtolower($get_emp_fname . " " . $get_emp_mname[0] ."." . " " . $get_emp_lname)) ?></h3>
+                <h3 class="profile-username text-center" style="font-size: 20px"><?php echo ucwords(strtoupper($get_emp_fname . " " . $get_emp_mname[0] ."." . " " . $get_emp_lname)) ?></h3>
 
                 <p class="text-muted text-center"><?php echo $get_emp_designation?></p>
 
@@ -150,7 +150,7 @@
                   <a href="../plugins/TCPDF/User/personal_info.php?ID=<?php echo $get_emp_id;?>" class="btn btn-success btn-block" id='profile_edit'><b>Print</b></a>
  <?php }elseif($get_emp_mname!='' && $get_emp_fname!='' && $get_emp_lname!='' && $get_emp_ename!='') {?>
 
-                <h3 class="profile-username text-center"><?php echo ucwords($get_emp_fname . " " . $get_emp_mname[0] ."." . " " . $get_emp_lname.","." ".$get_emp_ename)?></h3>
+                <h3 class="profile-username text-center" style="font-size: 20px"><?php echo ucwords(strtoupper($get_emp_fname . " " . $get_emp_mname[0] ."." . " " . $get_emp_lname.","." ".$get_emp_ename))?></h3>
 
                 <p class="text-muted text-center"><?php echo $get_emp_designation?></p>
 
@@ -266,7 +266,7 @@
               </div>
                   <!-- /.card-header -->
               <div class="card-body">
-                <a href="add_employee.php" class="btn btn-success btn-block"><b> <i class="fa fa-plus"></i> Add Employee</b></a>
+                <a href="../Admin/add_employee.php" class="btn btn-success btn-block"><b> <i class="fa fa-plus"></i> Add Employee</b></a>
               
                
 
@@ -287,7 +287,7 @@
                   <li class="nav-item"><a class="nav-link" href="#schedule" data-toggle="tab">Reference_number</a></li>
                   <li class="nav-item"><a class="nav-link" href="#deduction" data-toggle="tab">Schedules</a></li>
                    <li class="nav-item"><a class="nav-link" href="#cut_off" data-toggle="tab">Cut Off</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#others" data-toggle="tab">Attachment</a></li>
+                   <li class="nav-item"><a class="nav-link" href="#others" data-toggle="tab">Attachment</a></li>
                 </ul>
               </div><!-- /.card-header -->
 
@@ -306,6 +306,7 @@
                     <form role="form" method="get" action="<?php htmlspecialchars("PHP_SELF"); ?>"> 
                
                
+               
                  <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search by Name.." title="Type in a name" style="                 background-position: 10px 10px;
                   background-repeat: no-repeat;
                   width: 100%;
@@ -314,27 +315,28 @@
                   border: 1px solid #ddd;
                   margin-bottom: 12px;"> 
                    <div class="card-body table-responsive p-0" style="height: 720px;">
-                  <table id="user" class="table table-bordered table-striped table-hover" id="tab" cellspacing="1" cellpadding="8"  style="background-color: #f1f1f1;">
+                  <table id="user" class="table table-bordered table-striped table-hover" cellspacing="1" cellpadding="8"  style="background-color: #f1f1f1;">
 
-                  <thead style="position: relative;">
+                  <thead style="position: relatiive;">
                     <tr bgcolor="#80ced6" >
                       <th style="text-align:center;" width="5%">No.</th>
-                      <th style="text-align:center;" width="5%">ID</th>
-                     <th style="text-align:center;" width="30%">Name</th>
-                      <th style="text-align:center;">Category</th>
-                       <th style="text-align:center;"> Work Status</th>
-                       <th style="text-align:center;">Report</th>
+                       <th style="text-align:center;" width="5%">ID</th>
+                     <th style="text-align:center;" width="45%">NAME</th>
+                       <th style="text-align:center;" width="15%">WORK STATUS</th>
+                       <th style="text-align:center;" width="45%">DEPARTMENT</th>
+            
                     </tr>
                   </thead>
 
                   <tbody>
-                                 <?php $n  =   1;  while ($emp_data= $get_all_emp_data-> fetch(PDO::FETCH_ASSOC)) { ?>
-                  
+                                  <?php $n  =   1;  while ($emp_data= $get_all_emp_data-> fetch(PDO::FETCH_ASSOC)) { ?>
 
                   <tr>
+
             <?php if ($emp_data['E_Status']=="Active" or $emp_data['E_Status']=="Inactive")  {?>
                <td><?php echo $n++; ?></td>
             <?php if ($emp_data['EmpPhoto']<>"")  {?> 
+             
               <td><a href="employeedetails.php?ID=<?php echo $emp_data['ID']; ?>"><img class="profile-user-img img-square" style="width:50px; height:50px"
                        src="<?php echo (!empty([$emp_data['EmpPhoto']])) ? '../dist/photo/'.$emp_data['EmpPhoto'] : '../dist/photo/no-photo-icon.png'; ?>"
                        alt="User profile picture"></a></td>
@@ -349,47 +351,31 @@
 
              <?php if ($emp_data['E_Status']=="Active")  {?> 
                    <td> <a href="employeedetails.php?ID=<?php echo $emp_data['ID']; ?>"> <?php if ($emp_data['EmpExt']=="" Or $emp_data['EmpExt']=="N/A" Or $emp_data['EmpExt']=="n/a" or $emp_data['EmpExt']=="None" Or $emp_data['EmpExt']=="none")  {?> 
-                    <?php echo ucwords(strtolower($emp_data['EmpFname'] . " " . $emp_data['EmpMname'][0] ."." . " " . $emp_data['EmpLname']))?>
+                    <?php echo ucwords(strtoupper($emp_data['EmpFname'] . " " . $emp_data['EmpMname'][0] ."." . " " . $emp_data['EmpLname']))?>
                     <?php }elseif($emp_data['EmpExt']<>"") {?> 
-                      <?php echo ucwords(strtolower($emp_data['EmpFname'] . " " . $emp_data['EmpMname'][0] ."." . " " . $emp_data['EmpLname'].","." ".$emp_data['EmpExt']))?>
+                      <?php echo ucwords(strtoupper($emp_data['EmpFname'] . " " . $emp_data['EmpMname'][0] ."." . " " . $emp_data['EmpLname'].","." ".$emp_data['EmpExt']))?>
                      <?php } ?></a></td>
                      <td><?php echo $emp_data['Category']?></td>
 
-                     <td style="text-align:center;" ><?php echo $emp_data['E_Status'];?></td>
+                         
                      
                     
 
             <?php }elseif($emp_data['E_Status']=="Inactive") {?>  
                   <td style="text-align:left; color:red;" > <a href="employeedetails.php?ID=<?php echo $emp_data['ID'];?>"> <?php if ($emp_data['EmpExt']=="" Or $emp_data['EmpExt']=="N/A" Or $emp_data['EmpExt']=="n/a" or $emp_data['EmpExt']=="None" Or $emp_data['EmpExt']=="none")  {?> 
-                    <?php echo ucwords(strtolower($emp_data['EmpFname'] . " " . $emp_data['EmpMname'][0] ."." . " " . $emp_data['EmpLname']))?>
+                    <?php echo ucwords(strtoupper($emp_data['EmpFname'] . " " . $emp_data['EmpMname'][0] ."." . " " . $emp_data['EmpLname']))?>
                     <?php }elseif($emp_data['EmpExt']<>"") {?> 
-                      <?php echo ucwords(strtolower($emp_data['EmpFname'] . " " . $emp_data['EmpMname'][0] ."." . " " . $emp_data['EmpLname'].","." ".$emp_data['EmpExt']))?>
+                      <?php echo ucwords(strtoupper($emp_data['EmpFname'] . " " . $emp_data['EmpMname'][0] ."." . " " . $emp_data['EmpLname'].","." ".$emp_data['EmpExt']))?>
                      <?php } ?></a></td>
 
                      <td style="text-align:left; color:red;"><?php echo $emp_data['Category']?></td>
 
-                         <td style="text-align:center; color:red;" ><?php echo $emp_data['E_Status'];?></td>
-                     
+                         
+
                        <?php } ?> 
+                       <td style="text-align:center; color:black;" ><?php echo $emp_data['DeptCharge'];?></td>
 
 
-
-             <?php if ($emp_data['Report']=="Pending" Or $emp_data['Report']=="" )  {?> 
-                       <td align="center">
-                          <a href="employee_status.php?ID=<?php echo $emp_data['ID']; ?>" style="color:blue" ><?php echo "Pending"?>
-                          </a>  
-                    </td>
-            <?php }elseif($emp_data['Report']=="Verified") {?>
-                        <td align="center">
-                          <a href="employee_status.php?ID=<?php echo $emp_data['ID']; ?>"style="color:green" style="color:black" ><?php echo "Checked"?>
-                          </a>  
-                    </td>
-             <?php }elseif($emp_data['Report']=="Modify") {?>
-                        <td align="center">
-                          <a href="employee_status.php?ID=<?php echo $emp_data['ID']; ?>" style="color:red"><?php echo "Modify"?>
-                          </a>  
-                    </td>
-                     <?php } ?> 
                     
                           </tr>
                                    </tr>
@@ -479,7 +465,7 @@
                         <div class="col-sm-5">
                           <input type="input" class="form-control" id="ctcno" name="CtcNo" value="<?php echo $get_id_ctc;?>" readonly>
                         </div>
-                   <?php if ($get_emp_id=="1") {?>
+                           <?php if ($get_emp_id=="1") {?>
                          <a class="btn btn-default btn-xs" href="" data-toggle="tooltip" title="View"> <img src="../dist/img/approve.png" alt="" class="brand-image img-transparent" width="30" height="30" style="opacity: ">
                           </a>
 
@@ -510,7 +496,7 @@
                       </div>        
                    <!-- /.tab-pane -->
 
-                     <div class="tab-pane fade" id="others">             
+                      <div class="tab-pane fade" id="others">             
                     <h3>OTHER ATTACHMENTS</h3>
                      <p>The following DOCUMENTS attached are considered to be private. All information will be treated as strictly confidential.</p>
                     <hr>
@@ -559,7 +545,7 @@
                       </div>        
                    <!-- /.tab-pane -->
 
-              <div class="tab-pane fade" id="deduction">            
+                                           <div class="tab-pane fade" id="deduction">             
                    <div class="card-body">
                 <div class="tab-content">
                     <!-- Post -->
@@ -596,10 +582,10 @@
                   <tbody>
                                    <?php while ($emp_data= $get_schedule_data-> fetch(PDO::FETCH_ASSOC)) { ?>
                     <tr>
-                      <?php if ($emp_data['ID_sched']==$get_emp_id And $emp_data['Schedule']!="CUT OFF") {?>
+                      <?php if ($emp_data['ID_sched']==$get_emp_id) {?>
                     <td style="text-align:center;"><?php echo $emp_data['JobOrderNo'];?></td>
                <?php if ($emp_data['Period']!="" && $emp_data['Month1']!="" && $emp_data['Month2']!="") {?> 
-                  <td style="text-align:center; font-size:14px"><?php echo $emp_data['Period']." ".$emp_data['RegDays'].","." ".$emp_data['Years'];?> 
+                  <td style="text-align:center; font-size:14px"><?php echo $emp_data['Period']." ".$emp_data['RegDays']."-".$emp_data['RegDays2'].","." ".$emp_data['Years'];?> 
                   <br>
                       <?php echo $emp_data['Month1']." ".$emp_data['Days1'].","." ".$emp_data['Years'];?>
                   <br>
@@ -618,7 +604,7 @@
                    </td>
 
       <?php }elseif($emp_data['Period']!="" && $emp_data['Month1']!="" && $emp_data['Month2']=="") {?>
-                    <td style="text-align:left; font-size:14px"><?php echo $emp_data['Period']." ".$emp_data['RegDays'].","." ".$emp_data['Years'];?> 
+                    <td style="text-align:left; font-size:14px"><?php echo $emp_data['Period']." ".$emp_data['RegDays']."-".$emp_data['RegDays2'].","." ".$emp_data['Years'];?> 
                   <br>
                       <?php echo $emp_data['Month1']." ".$emp_data['Days1'].","." ".$emp_data['Years'];?></td>
                    <td style="text-align:center; font-size:14px"><?php echo $emp_data['Time1']." "."(".$emp_data['Schedule'].")";?>
@@ -632,7 +618,7 @@
 
 
        <?php }elseif($emp_data['Period']!="" && $emp_data['Month1']=="" && $emp_data['Month2']=="") {?>
-                      <td style="text-align:center; font-size:14px"><?php echo $emp_data['Period']." ".$emp_data['RegDays'].","." ".$emp_data['Years'];?> 
+                      <td style="text-align:center; font-size:14px"><?php echo $emp_data['Period']." ".$emp_data['RegDays']."-".$emp_data['RegDays2'].","." ".$emp_data['Years'];?> 
                     </td>
                     <td style="text-align:center; font-size:14px"><?php echo $emp_data['Time1']." "."(".$emp_data['Schedule'].")";?></td>
                     <td style="text-align:right; font-size:14px"><?php echo number_format($emp_data['Rate']);?></td>
@@ -813,7 +799,6 @@ function myFunction() {
   for (i = 0; i < tr.length; i++) {
     td = tr[i].getElementsByTagName("td")[1];
       td = tr[i].getElementsByTagName("td")[2];
-    
     
     if (td) {
       txtValue = td.textContent || td.innerText;
